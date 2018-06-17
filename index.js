@@ -17,14 +17,14 @@ DynamoUtil.anormalizeItem = function(item) {
 	var anormal = {}
 	for (var key in item) {
 		if (item.hasOwnProperty(key)) {
-			anormal[key] = DynamoUtil.anormalizeValue(item[key])
+			anormal[key] = DynamoUtil.stringify(item[key])
 		}
 	}
 	return anormal;
 }
 
 
-DynamoUtil.anormalizeValue = function( $value ) {
+DynamoUtil.stringify = function( $value ) {
 	if (typeof $value == 'boolean')
 		return {'BOOL' : $value }
 
@@ -50,7 +50,7 @@ DynamoUtil.anormalizeValue = function( $value ) {
 			var to_ret = {'L': [] }
 			for (var i in $value) {
 				if ($value.hasOwnProperty(i)) {
-					to_ret.L[i] = DynamoUtil.anormalizeValue($value[i] )
+					to_ret.L[i] = DynamoUtil.stringify($value[i] )
 				}
 			}
 			return to_ret
@@ -59,7 +59,7 @@ DynamoUtil.anormalizeValue = function( $value ) {
 		var to_ret = {'M': {} }
 		for (var i in $value) {
 			if ($value.hasOwnProperty(i)) {
-					to_ret.M[i] = DynamoUtil.anormalizeValue($value[i] )
+					to_ret.M[i] = DynamoUtil.stringify($value[i] )
 				}
 			}
 			return to_ret
@@ -67,6 +67,11 @@ DynamoUtil.anormalizeValue = function( $value ) {
 
 	// @todo: support other types
 }
+
+
+// backword compatibitity
+DynamoUtil.anormalizeValue = DynamoUtil.stringify;
+
 
 DynamoUtil.anormalizeType = function( $value ) {
 	if (typeof $value == 'boolean')
@@ -168,12 +173,12 @@ DynamoUtil.buildExpected = function( $expected ) {
 				} else if ($expected[key].hasOwnProperty('value2') && $expected[key].value2 !== undefined ) {
 					anormal[key] = {
 						ComparisonOperator: $expected[key].operator,
-						AttributeValueList: [ DynamoUtil.anormalizeValue( $expected[key].value ), DynamoUtil.anormalizeValue( $expected[key].value2 ) ]
+						AttributeValueList: [ DynamoUtil.stringify( $expected[key].value ), DynamoUtil.stringify( $expected[key].value2 ) ]
 					}
 				} else {
 					anormal[key] = {
 						ComparisonOperator: $expected[key].operator,
-						AttributeValueList: [ DynamoUtil.anormalizeValue( $expected[key].value ) ]
+						AttributeValueList: [ DynamoUtil.stringify( $expected[key].value ) ]
 					}
 				}
 		}
