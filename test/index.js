@@ -70,6 +70,12 @@ describe('stringify()', function () {
 		done()
 	});
 
+	it('binary', function(done) {
+		var d = util.stringify( new Buffer("\0") )
+		assert.deepStrictEqual( d,  { B: new Buffer("\0") } )
+		done()
+	});
+
 })
 
 
@@ -155,4 +161,9 @@ describe('parse()', function () {
 		done()
 	});
 
+	it('binary', function(done) {
+		var d = util.parse( { B: new Buffer("\0") } )
+		assert.deepStrictEqual( d, new Buffer("\0")  )
+		done()
+	});
 })

@@ -37,7 +37,7 @@ DynamoUtil.stringify = function( $value ) {
 	if ($value === null)
 		return {'NULL' : true }
 
-	if ($value instanceof Buffer)
+	if (Buffer.isBuffer($value))
 		return {'B' : $value }
 
 	// stringSet, numberSet
@@ -115,8 +115,8 @@ DynamoUtil.parse = function(v) {
 	if (v.hasOwnProperty('NULL'))
 		return null
 
-	// if (v.hasOwnProperty('B'))
-	// 	normal[key] = v['B']
+	if (v.hasOwnProperty('B'))
+		return v.B
 
 	// if (v.hasOwnProperty('SS'))
 	// 	normal[key] = v['SS']
