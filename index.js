@@ -96,6 +96,59 @@ DynamoUtil.normalizeList = function($items) {
 	return $list;
 }
 
+DynamoUtil.parse = function(v) {
+	if (typeof v !== 'object')
+		throw 'expecting object';
+
+	if (Object.keys(v).length !== 1)
+		throw 'expecting only one property in object: S, N, BOOL, NULL, L, M, etc ';
+
+	if (v.hasOwnProperty('S'))
+	 	return v.S
+
+	if (v.hasOwnProperty('N'))
+		return parseInt(v.N)
+
+	if (v.hasOwnProperty('BOOL'))
+		return v.BOOL
+
+	if (v.hasOwnProperty('NULL'))
+		return null
+
+	// if (v.hasOwnProperty('B'))
+	// 	normal[key] = v['B']
+
+	// if (v.hasOwnProperty('SS'))
+	// 	normal[key] = v['SS']
+
+	// if (v.hasOwnProperty('NS')) {
+	// 	normal[key] = []
+	// 	v['NS'].forEach(function(el,idx) {
+	// 		normal[key].push(parseFloat(el))
+	// 	})
+	// }
+
+	if (v.hasOwnProperty('L')){
+		var normal = [];
+		for (var i in v.L ) {
+			if (v.L.hasOwnProperty(i)) {
+				normal[i] = DynamoUtil.parse(v.L[i])
+			}
+		}
+		return normal;
+	}
+
+	if (v.hasOwnProperty('M')) {
+		var normal = {}
+		for (var i in v.M ) {
+			if (v.M.hasOwnProperty(i)) {
+				normal[i] = DynamoUtil.parse(v.M[i])
+			}
+		}
+		return normal;
+	}
+}
+
 DynamoUtil.normalizeItem = function($item) {
 	// disabled for now so we dont break compatibility with older versions, should return null on undefined $item
 	//if (!$item)
@@ -247,5 +300,6 @@ DynamoUtil.clone = function ( source) {
 
 // backword compatibitity
 DynamoUtil.anormalizeValue = DynamoUtil.stringify;
+DynamoUtil.normalizeValue  = DynamoUtil.parse;
 
 module.exports = DynamoUtil

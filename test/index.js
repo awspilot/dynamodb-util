@@ -71,3 +71,88 @@ describe('stringify()', function () {
 	});
 
 })
+
+
+
+
+describe('parse()', function () {
+
+	it('string', function(done) {
+		var d = util.parse( { S: 'text' } )
+		assert.deepStrictEqual(d, 'text' )
+		done()
+	});
+
+	it('number', function(done) {
+		var d = util.parse( { N: '1'} )
+		assert.deepStrictEqual(d, 1 )
+		done()
+	});
+
+	it('boolean true', function(done) {
+		var d = util.parse( {BOOL: true} )
+		assert.deepStrictEqual( d, true  )
+		done()
+	});
+
+	it('boolean false', function(done) {
+		var d = util.parse( {BOOL: false} )
+		assert.deepStrictEqual( d, false  )
+		done()
+	});
+
+	it('null', function(done) {
+		var d = util.parse( {NULL: true} )
+		assert.deepStrictEqual( d, null  )
+		done()
+	});
+	it('[]', function(done) {
+		var d = util.parse( {L: [] } )
+		assert.deepStrictEqual( d, []  )
+		done()
+	});
+	it('[1,"text",true, false, null, [], {} ]', function(done) {
+		var d = util.parse(
+			{
+				L: [
+					{N: '1' },
+					{S: 'text'},
+					{BOOL: true},
+					{BOOL: false},
+					{NULL: true},
+					{L: []},
+					{M: {}}
+				]
+			}
+		)
+		assert.deepStrictEqual( d, [1,"text",true, false, null, [], {} ]  )
+		done()
+	});
+
+	it('{}', function(done) {
+		var d = util.parse( {M: {} } )
+		assert.deepStrictEqual( d, {} )
+		done()
+	});
+
+	it('{ number: 1, string: "text", bool: true, nulled: null, arr: [], obj: {} }', function(done) {
+		var d = util.parse(
+
+			{
+				M: {
+					number: {N: '1'},
+					string: {S: 'text'},
+					bool: { BOOL: true},
+					nulled: {NULL: true},
+					arr: {L: []},
+					obj: {M: {}},
+				}
+			}
+
+
+			 )
+		assert.deepStrictEqual( d, { number: 1, string: "text", bool: true, nulled: null, arr: [], obj: {} } )
+		done()
+	});
+
+})
