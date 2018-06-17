@@ -69,10 +69,6 @@ DynamoUtil.stringify = function( $value ) {
 }
 
 
-// backword compatibitity
-DynamoUtil.anormalizeValue = DynamoUtil.stringify;
-
-
 DynamoUtil.anormalizeType = function( $value ) {
 	if (typeof $value == 'boolean')
 		return 'BOOL'
@@ -243,5 +239,13 @@ DynamoUtil.clone = function ( source) {
 
 	return to;
 }
+
+
+
+
+
+
+// backword compatibitity
+DynamoUtil.anormalizeValue = DynamoUtil.stringify;
 
 module.exports = DynamoUtil
