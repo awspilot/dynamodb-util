@@ -1,5 +1,5 @@
 util = require('../index')
-assert = require('assert')
+assert = require('core-assert')
 
 describe('stringify()', function () {
 

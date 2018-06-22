@@ -21,6 +21,6 @@
 	"devDependencies": {
 		"mocha": "3.5.3",
 		"async": "*",
-		"assert": "*"
+		"core-assert": "*"
 	}
 }
