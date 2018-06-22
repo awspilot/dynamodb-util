@@ -7,24 +7,16 @@ serialize dynamodb style documents into and out of objects
 
 
 ```
-	var util = require('@awspilot/dynamodb-util')
-```
+var util = require('@awspilot/dynamodb-util')
+util.stringify( 'text' ) 
+	=> { S: 'text'}
 
+util.stringify( { number: 1, bool: true, } ) 
+	=> { 'M': { number: {N: '1'}, bool: { BOOL: true}, } }
 
-```
-util.stringify( 'text' ) => { S: 'text'}
-```
+util.parse( { S: 'text' } ) 
+	=> 'text'
 
-
-```
-util.stringify( { number: 1, bool: true, } ) => { 'M': { number: {N: '1'}, bool: { BOOL: true}, } }
-```
-
-
-```
-util.parse( { S: 'text' } ) => 'text'
-```
-
-```
-util.parse( { M: { number: {N: '1'}, string: {S: 'text'}, bool: { BOOL: true}, } } ) => { number: 1, string: "text", bool: true }
+util.parse( { M: { number: {N: '1'}, string: {S: 'text'}, bool: { BOOL: true}, } } ) 
+	=> { number: 1, string: "text", bool: true }
 ```
