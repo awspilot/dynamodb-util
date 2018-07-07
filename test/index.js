@@ -76,6 +76,26 @@ describe('stringify()', function () {
 		done()
 	});
 
+	it('StringSet from Set', function(done) {
+		var d = util.stringify( new Set(['a','b', 'c']) )
+		assert.deepStrictEqual( d,  { SS: [ 'a', 'b', 'c' ] } )
+		done()
+	});
+	it('NumberSet from Set', function(done) {
+		var d = util.stringify( new Set([1,2,-3]) )
+		assert.deepStrictEqual( d,  { NS: [ "1", "2", "-3" ] } )
+		done()
+	});
+	it('List from empty Set', function(done) {
+		var d = util.stringify( new Set() )
+		assert.deepStrictEqual( d,  { L: [] } )
+		done()
+	});
+	it('List from mixed Set', function(done) {
+		var d = util.stringify( new Set(['string', 1 ]) )
+		assert.deepStrictEqual( d,  { L: [ { S: 'string' },  { N: '1'} ] } )
+		done()
+	});
 })
 
 

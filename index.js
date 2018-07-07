@@ -56,6 +56,39 @@ DynamoUtil.stringify = function( $value ) {
 			return to_ret
 		}
 
+		if ($value instanceof Set) {
+			var is_ss = true;
+			var is_ns = true;
+			
+			// count elements in Set
+			if ($value.size === 0) {
+				is_ss = false;
+				is_ns = false;
+			}
+			
+			$value.forEach(function (v) { 
+				if ( typeof v === "string" ) {
+					is_ns = false;
+				} else if ( typeof v === "number" ) {
+					is_ss = false;
+				} else {
+					is_ss = false;
+					is_ns = false;
+				}
+			})
+			if (is_ss)
+				return { 'SS': Array.from($value) }
+
+			if (is_ns)
+				return { 
+					'NS': Array.from($value).map(function(item) { return item.toString() }) 
+				}
+			
+			return { 
+				'L': Array.from($value).map(function(item) { return DynamoUtil.stringify(item) })
+			}
+		}
+
 		var to_ret = {'M': {} }
 		for (var i in $value) {
 			if ($value.hasOwnProperty(i)) {
