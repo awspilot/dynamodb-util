@@ -21,4 +21,13 @@ util.stringify( 'text' )
 util.stringify( { number: 1, bool: true, } ) 
 	=> { 'M': { number: {N: '1'}, bool: { BOOL: true}, } }
 
+util.stringify( { s1: new Set([1,2,3]), s2: new Set(['a','b','c']) } ) 
+	=> { 'M': { s1: {NS: ['1','2','3']}, s2: { SS: ['a','b', 'c']}, } }
+
+// empty Set is converted as DynamoDB List
+// mixed type Sets are also converted to DynamoDB List
+
+util.stringify( { s1: new Set(), s2: new Set(['a',1) } ) 
+	=> { 'M': { s1: { L: [ ] }, s2: { L: [ 'a', 1 ]}, } }
+
 ```
