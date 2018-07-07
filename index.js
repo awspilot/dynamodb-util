@@ -1,6 +1,10 @@
 
 var DynamoUtil = {}
-
+var array_from_set = function(s) {
+	var r = []
+	s.forEach(function(n){ r.push(n) })
+	return r
+} 
 DynamoUtil.Raw = function(data) {
 	this.data = data
 }
@@ -77,15 +81,15 @@ DynamoUtil.stringify = function( $value ) {
 				}
 			})
 			if (is_ss)
-				return { 'SS': Array.from($value) }
+				return { 'SS': array_from_set($value) }
 
 			if (is_ns)
 				return { 
-					'NS': Array.from($value).map(function(item) { return item.toString() }) 
+					'NS': array_from_set($value).map(function(item) { return item.toString() }) 
 				}
 			
 			return { 
-				'L': Array.from($value).map(function(item) { return DynamoUtil.stringify(item) })
+				'L': array_from_set($value).map(function(item) { return DynamoUtil.stringify(item) })
 			}
 		}
 
