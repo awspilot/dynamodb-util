@@ -1,5 +1,8 @@
 
 var DynamoUtil = {}
+
+// works for nodeJS 0.x and iojs,
+// Array.from( Set ) doesnt
 var array_from_set = function(s) {
 	var r = []
 	s.forEach(function(n){ r.push(n) })
