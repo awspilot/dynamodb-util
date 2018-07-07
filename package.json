@@ -1,6 +1,6 @@
 {
 	"name": "@awspilot/dynamodb-util",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "serialize dynamodb style documents into and out of objects",
  	"main": "index.js",
 	"scripts": {
@@ -13,7 +13,7 @@
 	"author": "",
 	"license": "ISC",
 	"bugs": {
-    	"url": "https://github.com/awspilot/dynamodb-util/issues"
+		"url": "https://github.com/awspilot/dynamodb-util/issues"
 	},
 	"homepage": "https://github.com/awspilot/dynamodb-util#readme",
 	"dependencies": {
