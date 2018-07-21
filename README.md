@@ -12,6 +12,8 @@ var util = require('@awspilot/dynamodb-util')
 
 ```
 
+
+
 ```
 
 // default settings
@@ -54,6 +56,7 @@ util.config.empty_string_replace_as = null;
 
 ```
 
+```
 
 util.parse( { S: 'text' } ) 
 	=> 'text'
