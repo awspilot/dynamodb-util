@@ -1,6 +1,8 @@
 # dynamodb-util
 
 [![Build Status](https://travis-ci.org/awspilot/dynamodb-util.svg?branch=master)](https://travis-ci.org/awspilot/dynamodb-util) 
+![License](https://img.shields.io/github/license/awspilot/dynamodb-util.svg)
+[![Dependencies](https://david-dm.org/awspilot/dynamodb-util.svg)](https://david-dm.org/awspilot/dynamodb-util)  
 
 serialize dynamodb style documents into and out of objects
 
