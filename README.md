@@ -9,6 +9,23 @@ serialize dynamodb style documents into and out of objects
 ```
 var util = require('@awspilot/dynamodb-util')
 
+// defaults
+util.config.stringset_parse_as_set  = false; // by default array is returned
+util.config.numberset_parse_as_set  = false; // by default array is returned
+util.config.empty_string_replace_as = "";    // no replacement, by default
+
+// recommended for node 0.12+
+util.config.stringset_parse_as_set = true;  // will return new Set(...)
+util.config.numberset_parse_as_set = true;  // will return new Set(...)
+
+// ways arround empty string
+// stringify() will ignore the attribute for String and Map
+util.config.empty_string_replace_as = undefined; 
+
+
+util.config.empty_string_replace_as = "\0";      // stringify() will return\0 and parse() will convert it back to ''
+util.config.empty_string_replace_as = null;		 // stringify() will return null, parse()
+
 util.parse( { S: 'text' } ) 
 	=> 'text'
 
