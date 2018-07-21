@@ -1,5 +1,11 @@
 
-var DynamoUtil = {}
+var DynamoUtil = function() {};
+
+DynamoUtil.config = {
+	stringset_parse_as_set: false,
+	numberset_parse_as_set: false,
+	empty_string_replace_as: "",
+}
 
 // works for nodeJS 0.x and iojs,
 // Array.from( Set ) doesnt
@@ -38,8 +44,17 @@ DynamoUtil.stringify = function( $value ) {
 	if (typeof $value == 'number')
 		return {'N' : $value.toString() }
 
-	if (typeof $value == 'string')
+	if (typeof $value == 'string') {
+		if ($value.length === 0) {
+			if (DynamoUtil.config.empty_string_replace_as === "") {
+				return {'S' : $value }
+			} else if (DynamoUtil.config.empty_string_replace_as === undefined) {
+				return undefined
+			}
+			return DynamoUtil.stringify( DynamoUtil.config.empty_string_replace_as )
+		}
 		return {'S' : $value }
+	}
 
 	if ($value === null)
 		return {'NULL' : true }
@@ -99,7 +114,10 @@ DynamoUtil.stringify = function( $value ) {
 		var to_ret = {'M': {} }
 		for (var i in $value) {
 			if ($value.hasOwnProperty(i)) {
-					to_ret.M[i] = DynamoUtil.stringify($value[i] )
+					var val = DynamoUtil.stringify($value[i] )
+					
+					if (val !== undefined ) // when empty string is replaced with undefined
+						to_ret.M[i] = val
 				}
 			}
 			return to_ret
@@ -158,15 +176,19 @@ DynamoUtil.parse = function(v) {
 	if (v.hasOwnProperty('B'))
 		return v.B
 
-	// if (v.hasOwnProperty('SS'))
-	// 	normal[key] = v['SS']
+	if (v.hasOwnProperty('SS')) {
+		if (DynamoUtil.config.stringset_parse_as_set)
+			return new Set(v.SS)
 
-	// if (v.hasOwnProperty('NS')) {
-	// 	normal[key] = []
-	// 	v['NS'].forEach(function(el,idx) {
-	// 		normal[key].push(parseFloat(el))
-	// 	})
-	// }
+		return v.SS
+	}
+
+	if (v.hasOwnProperty('NS')) {
+		if (DynamoUtil.config.numberset_parse_as_set)
+			return new Set(v.NS.map(function(el) { return parseFloat(el)}))
+
+		return v.NS.map(function(el) { return parseFloat(el)})
+	}
 
 	if (v.hasOwnProperty('L')){
 		var normal = [];
