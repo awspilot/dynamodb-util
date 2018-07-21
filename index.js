@@ -161,8 +161,12 @@ DynamoUtil.parse = function(v) {
 	if (Object.keys(v).length !== 1)
 		throw 'expecting only one property in object: S, N, BOOL, NULL, L, M, etc ';
 
-	if (v.hasOwnProperty('S'))
-	 	return v.S
+	if (v.hasOwnProperty('S')) {
+		if ( v.S === DynamoUtil.config.empty_string_replace_as )
+			return '';
+
+		return v.S
+	}
 
 	if (v.hasOwnProperty('N'))
 		return parseInt(v.N)
