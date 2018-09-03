@@ -45,8 +45,8 @@ describe('stringify()', function () {
 	});
 
 	it('number', function(done) {
-		var d = util.stringify( 1 )
-		assert.deepStrictEqual(d, { N: '1'})
+		var d = util.stringify( 1.5 )
+		assert.deepStrictEqual(d, { N: '1.5'})
 		done()
 	});
 
