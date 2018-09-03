@@ -13,7 +13,7 @@ var array_from_set = function(s) {
 	var r = []
 	s.forEach(function(n){ r.push(n) })
 	return r
-} 
+}
 DynamoUtil.Raw = function(data) {
 	this.data = data
 }
@@ -25,7 +25,7 @@ DynamoUtil.anormalizeList = function(list) {
 	}
 	return $ret;
 }
-
+/* possible that is no longer needed, replaced by stringify() */
 DynamoUtil.anormalizeItem = function(item) {
 	var anormal = {}
 	for (var key in item) {
@@ -81,14 +81,14 @@ DynamoUtil.stringify = function( $value ) {
 		if ($value instanceof Set) {
 			var is_ss = true;
 			var is_ns = true;
-			
+
 			// count elements in Set
 			if ($value.size === 0) {
 				is_ss = false;
 				is_ns = false;
 			}
-			
-			$value.forEach(function (v) { 
+
+			$value.forEach(function (v) {
 				if ( typeof v === "string" ) {
 					is_ns = false;
 				} else if ( typeof v === "number" ) {
@@ -102,11 +102,11 @@ DynamoUtil.stringify = function( $value ) {
 				return { 'SS': array_from_set($value) }
 
 			if (is_ns)
-				return { 
-					'NS': array_from_set($value).map(function(item) { return item.toString() }) 
+				return {
+					'NS': array_from_set($value).map(function(item) { return item.toString() })
 				}
-			
-			return { 
+
+			return {
 				'L': array_from_set($value).map(function(item) { return DynamoUtil.stringify(item) })
 			}
 		}
@@ -115,7 +115,7 @@ DynamoUtil.stringify = function( $value ) {
 		for (var i in $value) {
 			if ($value.hasOwnProperty(i)) {
 					var val = DynamoUtil.stringify($value[i] )
-					
+
 					if (val !== undefined ) // when empty string is replaced with undefined
 						to_ret.M[i] = val
 				}
@@ -146,6 +146,7 @@ DynamoUtil.anormalizeType = function( $value ) {
 	// @todo: support other types
 }
 
+/*
 DynamoUtil.normalizeList = function($items) {
 	var $list = []
 	for (var i in $items) {
@@ -153,6 +154,7 @@ DynamoUtil.normalizeList = function($items) {
 	}
 	return $list;
 }
+*/
 
 DynamoUtil.parse = function(v) {
 	if (typeof v !== 'object')
@@ -169,7 +171,7 @@ DynamoUtil.parse = function(v) {
 	}
 
 	if (v.hasOwnProperty('N'))
-		return parseInt(v.N)
+		return parseFloat(v.N)
 
 	if (v.hasOwnProperty('BOOL'))
 		return v.BOOL
