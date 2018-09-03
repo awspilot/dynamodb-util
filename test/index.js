@@ -175,8 +175,8 @@ describe('parse()', function () {
 
 
 	it('number', function(done) {
-		var d = util.parse( { N: '1'} )
-		assert.deepStrictEqual(d, 1 )
+		var d = util.parse( { N: '1.5'} )
+		assert.deepStrictEqual(d, 1.5 )
 		done()
 	});
 
