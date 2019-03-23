@@ -249,7 +249,7 @@ describe('parse()', function () {
 	it('binary', function(done) {
 		var d = util.parse( { B: new Buffer("4oyb77iPIGhvdXJnbGFzcy4g8J+VkCBjbG9jay4g4oyaIHdhdGNoLg==", "base64") } )
 console.log(d)
-		assert.deepStrictEqual( d, new Buffer("\0")  )
+		assert.deepStrictEqual( d, "⌛️ hourglass. 🕐 clock. ⌚ watch."  )
 		done()
 	});
 
