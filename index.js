@@ -179,8 +179,13 @@ DynamoUtil.parse = function(v) {
 	if (v.hasOwnProperty('NULL'))
 		return null
 
-	if (v.hasOwnProperty('B'))
-		return v.B
+	if (v.hasOwnProperty('B')) {
+		if (typeof Buffer.from === "function") { // Node 5.10+
+			return Buffer.from( v.B, 'base64' );
+		} else { // older Node versions, now deprecated
+			return new Buffer( v.B, 'base64' );
+		}
+	}
 
 	if (v.hasOwnProperty('SS')) {
 		if (DynamoUtil.config.stringset_parse_as_set)
