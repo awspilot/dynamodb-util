@@ -162,7 +162,7 @@ describe('parse()', function () {
 	it('empty string in List - replaced with \\0', function(done) {
 		util.config.empty_string_replace_as = "\0"
 		var d = util.parse( { L: [ { N: '1' }, { S: 'a' }, { S: '\u0000' }, { NULL: true } ] } )
-		
+
 		assert.deepStrictEqual(d, [1,"a","",null] )
 		done()
 	});
@@ -248,6 +248,7 @@ describe('parse()', function () {
 
 	it('binary', function(done) {
 		var d = util.parse( { B: new Buffer("\0") } )
+console.log(d)
 		assert.deepStrictEqual( d, new Buffer("\0")  )
 		done()
 	});
