@@ -4,6 +4,7 @@ var DynamoUtil = function() {};
 DynamoUtil.config = {
 	stringset_parse_as_set: false,
 	numberset_parse_as_set: false,
+	binaryset_parse_as_set: false,
 	empty_string_replace_as: "",
 }
 
@@ -199,6 +200,13 @@ DynamoUtil.parse = function(v) {
 			return new Set(v.NS.map(function(el) { return parseFloat(el)}))
 
 		return v.NS.map(function(el) { return parseFloat(el)})
+	}
+
+	if (v.hasOwnProperty('BS')) {
+		if (DynamoUtil.config.binaryset_parse_as_set)
+			return new Set(v.BS.map(function(el) { return el }))
+
+		return v.BS.map(function(el) { return el })
 	}
 
 	if (v.hasOwnProperty('L')){

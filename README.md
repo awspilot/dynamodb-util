@@ -21,6 +21,7 @@ var util = require('@awspilot/dynamodb-util')
 // default settings
 util.config.stringset_parse_as_set  = false; // by default array is returned
 util.config.numberset_parse_as_set  = false; // by default array is returned
+util.config.binaryset_parse_as_set  = false; // by default array is returned
 util.config.empty_string_replace_as = "";    // no replacement, by default
 
 ```
