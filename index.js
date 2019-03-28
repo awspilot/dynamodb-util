@@ -375,6 +375,61 @@ DynamoUtil.clone = function ( source) {
 }
 
 
+DynamoUtil.toSQLJSON = function(o, is_list ) {
+	
+	if (is_list) {
+		return "[" + o.map(function(l) {
+			if (l.hasOwnProperty('S'))
+				return JSON.stringify(l.S)
+			if (l.hasOwnProperty('N'))
+				return l.N;
+			if (l.hasOwnProperty('B'))
+				return "Buffer.from('" + l.B.toString('base64') + "', 'base64')";
+			if (l.hasOwnProperty('BOOL'))
+				return l.BOOL;
+			if (l.hasOwnProperty('NULL'))
+				return 'null';
+			if (l.hasOwnProperty('SS'))
+				return "new StringSet(" + JSON.stringify(l.SS) + ")";
+			if (l.hasOwnProperty('NS'))
+				return "new NumberSet(" + JSON.stringify(l.NS.map(function(n) { return parseFloat(n) })) + ")";
+			if (l.hasOwnProperty('BS'))
+				return "new BinarySet([" + l.BS.map(function(b) { return "Buffer.from('" + b.toString('base64') + "', 'base64')" }).join(',') + "])";
+			if (l.hasOwnProperty('M'))
+				return to_sql_json(l.M);
+			if (l.hasOwnProperty('L'))
+				return to_sql_json(l.L, true );
+
+			return JSON.stringify(l) 
+		}).join(',') + ']'
+	}
+	
+	var oeach = []
+	Object.keys(o).map(function(k) {
+		if (o[k].hasOwnProperty('S'))
+			oeach.push("'" + k + "':" + JSON.stringify(o[k].S));
+		if (o[k].hasOwnProperty('N'))
+			oeach.push("'" + k + "':" + o[k].N);
+		if (o[k].hasOwnProperty('B'))
+			oeach.push("'" + k + "':" + "Buffer.from('" + o[k].B.toString('base64') + "', 'base64')" );
+		if (o[k].hasOwnProperty('BOOL'))
+			oeach.push("'" + k + "':" + o[k].BOOL );
+		if (o[k].hasOwnProperty('NULL'))
+			oeach.push("'" + k + "':" + 'null' );
+		if (o[k].hasOwnProperty('SS'))
+			oeach.push("'" + k + "':" + "new StringSet(" + JSON.stringify(o[k].SS) + ")" );
+		if (o[k].hasOwnProperty('NS'))
+			oeach.push("'" + k + "':" + "new NumberSet(" + JSON.stringify(o[k].NS.map(function(n) { return parseFloat(n) })) + ")" );
+		if (o[k].hasOwnProperty('BS'))
+			oeach.push("'" + k + "':" + "new BinarySet([" + o[k].BS.map(function(b) { return "Buffer.from('" + b.toString('base64') + "', 'base64')" }).join(',') + "])" );
+		if (o[k].hasOwnProperty('M'))
+			oeach.push("'" + k + "':" + to_sql_json(o[k].M)  );
+		if (o[k].hasOwnProperty('L'))
+			oeach.push("'" + k + "':" + to_sql_json(o[k].L, true ) );
+
+	})
+	return "{" + oeach.join(',') + '}'
+}
 
 
 
