@@ -423,9 +423,9 @@ DynamoUtil.toSQLJSON = function(o, is_list ) {
 		if (o[k].hasOwnProperty('BS'))
 			oeach.push("'" + k + "':" + "new BinarySet([" + o[k].BS.map(function(b) { return "Buffer.from('" + b.toString('base64') + "', 'base64')" }).join(',') + "])" );
 		if (o[k].hasOwnProperty('M'))
-			oeach.push("'" + k + "':" + to_sql_json(o[k].M)  );
+			oeach.push("'" + k + "':" + this.toSQLJSON(o[k].M)  );
 		if (o[k].hasOwnProperty('L'))
-			oeach.push("'" + k + "':" + to_sql_json(o[k].L, true ) );
+			oeach.push("'" + k + "':" + this.toSQLJSON(o[k].L, true ) );
 
 	})
 	return "{" + oeach.join(',') + '}'
