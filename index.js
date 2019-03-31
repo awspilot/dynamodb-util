@@ -376,7 +376,7 @@ DynamoUtil.clone = function ( source) {
 
 
 DynamoUtil.toSQLJSON = function(o, is_list ) {
-	
+
 	if (is_list) {
 		return "[" + o.map(function(l) {
 			if (l.hasOwnProperty('S'))
@@ -396,14 +396,14 @@ DynamoUtil.toSQLJSON = function(o, is_list ) {
 			if (l.hasOwnProperty('BS'))
 				return "new BinarySet([" + l.BS.map(function(b) { return "Buffer.from('" + b.toString('base64') + "', 'base64')" }).join(',') + "])";
 			if (l.hasOwnProperty('M'))
-				return to_sql_json(l.M);
+				return this.toSQLJSON(l.M);
 			if (l.hasOwnProperty('L'))
-				return to_sql_json(l.L, true );
+				return this.toSQLJSON(l.L, true );
 
-			return JSON.stringify(l) 
+			return JSON.stringify(l)
 		}).join(',') + ']'
 	}
-	
+
 	var oeach = []
 	Object.keys(o).map(function(k) {
 		if (o[k].hasOwnProperty('S'))
