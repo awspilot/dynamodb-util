@@ -396,9 +396,9 @@ DynamoUtil.toSQLJSON = function(o, is_list ) {
 			if (l.hasOwnProperty('BS'))
 				return "new BinarySet([" + l.BS.map(function(b) { return "Buffer.from('" + b.toString('base64') + "', 'base64')" }).join(',') + "])";
 			if (l.hasOwnProperty('M'))
-				return this.toSQLJSON(l.M);
+				return DynamoUtil.toSQLJSON(l.M);
 			if (l.hasOwnProperty('L'))
-				return this.toSQLJSON(l.L, true );
+				return DynamoUtil.toSQLJSON(l.L, true );
 
 			return JSON.stringify(l)
 		}).join(',') + ']'
@@ -423,9 +423,9 @@ DynamoUtil.toSQLJSON = function(o, is_list ) {
 		if (o[k].hasOwnProperty('BS'))
 			oeach.push("'" + k + "':" + "new BinarySet([" + o[k].BS.map(function(b) { return "Buffer.from('" + b.toString('base64') + "', 'base64')" }).join(',') + "])" );
 		if (o[k].hasOwnProperty('M'))
-			oeach.push("'" + k + "':" + this.toSQLJSON(o[k].M)  );
+			oeach.push("'" + k + "':" + DynamoUtil.toSQLJSON(o[k].M)  );
 		if (o[k].hasOwnProperty('L'))
-			oeach.push("'" + k + "':" + this.toSQLJSON(o[k].L, true ) );
+			oeach.push("'" + k + "':" + DynamoUtil.toSQLJSON(o[k].L, true ) );
 
 	})
 	return "{" + oeach.join(',') + '}'
