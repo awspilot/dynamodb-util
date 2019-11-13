@@ -1,4 +1,7 @@
+src/
 node_modules
 .git
 .nvmrc
+.travis.yml
 package-lock.json
+webpack.config.js
