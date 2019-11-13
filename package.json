@@ -1,6 +1,6 @@
 {
 	"name": "@awspilot/dynamodb-util",
-	"version": "1.0.11",
+	"version": "1.0.12",
 	"description": "serialize dynamodb style documents into and out of objects",
 	"main": "dist/awspilot-dynamodb-util.js",
 	"scripts": {
