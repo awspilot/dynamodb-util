@@ -4,7 +4,12 @@
 	"description": "serialize dynamodb style documents into and out of objects",
 	"main": "index.js",
 	"scripts": {
-		"test": "mocha --timeout 100000 -S -R spec --exit"
+		"test": "mocha --timeout 100000 -S -R spec --exit",
+
+		"start": "webpack -w & node_modules/node-static/bin/cli.js -p 9992",
+		"build": "webpack",
+		"watch": "webpack --config webpack.config.js --watch"
+
 	},
 	"repository": {
 		"type": "git",
