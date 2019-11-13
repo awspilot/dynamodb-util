@@ -1,4 +1,5 @@
-util = require('../index')
+util = require('../dist/awspilot-dynamodb-util')
+
 assert = require('core-assert')
 
 describe('stringify()', function () {
