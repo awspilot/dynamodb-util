@@ -61,7 +61,7 @@ DynamoUtil.stringify = function( $value ) {
 		return {'NULL' : true }
 
 	/// #if BROWSER
-	if (Buffer.isBuffer($value))
+	if ( $value instanceof Uint8Array )
 		return {'B' : $value }
 	/// #else
 	if (Buffer.isBuffer($value))
