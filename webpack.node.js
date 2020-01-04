@@ -37,8 +37,16 @@ module.exports = {
 		rules: [
 			{
 				test: /\.js$/,
-				exclude: /(node_modules|bower_components)/,
-				use: 'babel-loader'
+				exclude: /node_modules/,
+				use: [
+					{
+						loader: "ifdef-loader",
+						options: {
+							BROWSER: false,
+						}
+					},
+					{loader: 'babel-loader'},
+				]
 			}
 		]
 	}
