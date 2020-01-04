@@ -160,7 +160,7 @@ DynamoUtil.stringify = function ($value) {
 	if ($value === null) return { 'NULL': true
 
 /////////////////
-	};if (Buffer.isBuffer($value)) return { 'B': $value
+	};if ($value instanceof Uint8Array) return { 'B': $value
 ///////////
 ////////////////////////////////////////////////////
 ////////////
