@@ -7,7 +7,7 @@
 		exports["ractive-dynamodb-util"] = factory();
 	else
 		root["ractive-dynamodb-util"] = factory();
-})(global, function() {
+})(window, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
