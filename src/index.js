@@ -188,7 +188,7 @@ DynamoUtil.parse = function(v) {
 	if (v.hasOwnProperty('B')) {
 
 		/// #if BROWSER
-			return Uint8Array.from( v.B )
+			return Uint8Array.from( btoa( v.B ) , function (c) { return c.charCodeAt(0) } )
 		/// #else
 		if (typeof Buffer.from === "function") { // Node 5.10+
 			return Buffer.from( v.B, 'base64' );
