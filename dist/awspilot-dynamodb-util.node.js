@@ -1,14 +1,5 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define("ractive-dynamodb-util", [], factory);
-	else if(typeof exports === 'object')
-		exports["ractive-dynamodb-util"] = factory();
-	else
-		root["ractive-dynamodb-util"] = factory();
-})(global, function() {
-return /******/ (function(modules) { // webpackBootstrap
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -559,4 +550,3 @@ DynamoUtil.normalizeValue = DynamoUtil.parse;
 
 /***/ })
 /******/ ])["default"];
-});

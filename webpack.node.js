@@ -3,9 +3,12 @@ const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-	node: false,
+	node: true,
 	mode: 'production',
 	target: 'node',
+	node: {
+
+	},
 	context: path.resolve(__dirname, 'src'),
 	optimization: {
 		minimize: true,
@@ -26,10 +29,8 @@ module.exports = {
 		filename: '[name].js',
 		library: 'ractive-dynamodb-util',
 
-		// var, this, window, umd
-		libraryTarget: 'umd',
+		libraryTarget: 'commonjs2',
 		libraryExport: 'default',
-		umdNamedDefine: true   // Important
 	},
 	externals: {
 	},
