@@ -60,8 +60,13 @@ DynamoUtil.stringify = function( $value ) {
 	if ($value === null)
 		return {'NULL' : true }
 
+	/// #if BROWSER
 	if (Buffer.isBuffer($value))
 		return {'B' : $value }
+	/// #else
+	if (Buffer.isBuffer($value))
+		return {'B' : $value }
+	/// #endif
 
 	// stringSet, numberSet
 	if ((typeof $value == 'object') && ($value instanceof DynamoUtil.Raw) ) {
@@ -181,11 +186,20 @@ DynamoUtil.parse = function(v) {
 		return null
 
 	if (v.hasOwnProperty('B')) {
+
+		/// #if BROWSER
 		if (typeof Buffer.from === "function") { // Node 5.10+
 			return Buffer.from( v.B, 'base64' );
 		} else { // older Node versions, now deprecated
 			return new Buffer( v.B, 'base64' );
 		}
+		/// #else
+		if (typeof Buffer.from === "function") { // Node 5.10+
+			return Buffer.from( v.B, 'base64' );
+		} else { // older Node versions, now deprecated
+			return new Buffer( v.B, 'base64' );
+		}
+		/// #endif
 	}
 
 	if (v.hasOwnProperty('SS')) {
@@ -383,8 +397,13 @@ DynamoUtil.toSQLJSON = function(o, is_list ) {
 				return JSON.stringify(l.S)
 			if (l.hasOwnProperty('N'))
 				return l.N;
-			if (l.hasOwnProperty('B'))
+			if (l.hasOwnProperty('B')) {
+				/// #if BROWSER
 				return "Buffer.from('" + l.B.toString('base64') + "', 'base64')";
+				/// #else
+				return "Buffer.from('" + l.B.toString('base64') + "', 'base64')";
+				/// #endif
+			}
 			if (l.hasOwnProperty('BOOL'))
 				return l.BOOL;
 			if (l.hasOwnProperty('NULL'))
@@ -393,8 +412,13 @@ DynamoUtil.toSQLJSON = function(o, is_list ) {
 				return "new StringSet(" + JSON.stringify(l.SS) + ")";
 			if (l.hasOwnProperty('NS'))
 				return "new NumberSet(" + JSON.stringify(l.NS.map(function(n) { return parseFloat(n) })) + ")";
-			if (l.hasOwnProperty('BS'))
+			if (l.hasOwnProperty('BS')) {
+				/// #if BROWSER
 				return "new BinarySet([" + l.BS.map(function(b) { return "Buffer.from('" + b.toString('base64') + "', 'base64')" }).join(',') + "])";
+				/// #else
+				return "new BinarySet([" + l.BS.map(function(b) { return "Buffer.from('" + b.toString('base64') + "', 'base64')" }).join(',') + "])";
+				/// #endif
+			}
 			if (l.hasOwnProperty('M'))
 				return DynamoUtil.toSQLJSON(l.M);
 			if (l.hasOwnProperty('L'))
@@ -410,8 +434,13 @@ DynamoUtil.toSQLJSON = function(o, is_list ) {
 			oeach.push("'" + k + "':" + JSON.stringify(o[k].S));
 		if (o[k].hasOwnProperty('N'))
 			oeach.push("'" + k + "':" + o[k].N);
-		if (o[k].hasOwnProperty('B'))
+		if (o[k].hasOwnProperty('B')) {
+			/// #if BROWSER
 			oeach.push("'" + k + "':" + "Buffer.from('" + o[k].B.toString('base64') + "', 'base64')" );
+			/// #else
+			oeach.push("'" + k + "':" + "Buffer.from('" + o[k].B.toString('base64') + "', 'base64')" );
+			/// #endif
+		}
 		if (o[k].hasOwnProperty('BOOL'))
 			oeach.push("'" + k + "':" + o[k].BOOL );
 		if (o[k].hasOwnProperty('NULL'))
@@ -420,8 +449,13 @@ DynamoUtil.toSQLJSON = function(o, is_list ) {
 			oeach.push("'" + k + "':" + "new StringSet(" + JSON.stringify(o[k].SS) + ")" );
 		if (o[k].hasOwnProperty('NS'))
 			oeach.push("'" + k + "':" + "new NumberSet(" + JSON.stringify(o[k].NS.map(function(n) { return parseFloat(n) })) + ")" );
-		if (o[k].hasOwnProperty('BS'))
+		if (o[k].hasOwnProperty('BS')) {
+			/// #if BROWSER
 			oeach.push("'" + k + "':" + "new BinarySet([" + o[k].BS.map(function(b) { return "Buffer.from('" + b.toString('base64') + "', 'base64')" }).join(',') + "])" );
+			/// #else
+			oeach.push("'" + k + "':" + "new BinarySet([" + o[k].BS.map(function(b) { return "Buffer.from('" + b.toString('base64') + "', 'base64')" }).join(',') + "])" );
+			/// #endif
+		}
 		if (o[k].hasOwnProperty('M'))
 			oeach.push("'" + k + "':" + DynamoUtil.toSQLJSON(o[k].M)  );
 		if (o[k].hasOwnProperty('L'))
