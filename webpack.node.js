@@ -18,8 +18,8 @@ module.exports = {
 	plugins: [
 	],
 	entry: {
-		'awspilot-dynamodb-util': path.resolve(__dirname, './src/index.js'),
-		'awspilot-dynamodb-util.min': path.resolve(__dirname, './src/index.js')
+		'awspilot-dynamodb-util.node': path.resolve(__dirname, './src/index.js'),
+		'awspilot-dynamodb-util.node.min': path.resolve(__dirname, './src/index.js')
 	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
