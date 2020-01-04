@@ -2,7 +2,7 @@
 	"name": "@awspilot/dynamodb-util",
 	"version": "1.0.12",
 	"description": "serialize dynamodb style documents into and out of objects",
-	"main": "dist/awspilot-dynamodb-util.js",
+	"main": "dist/awspilot-dynamodb-util.node.js",
 	"scripts": {
 		"test": "mocha --timeout 100000 -S -R spec --exit",
 

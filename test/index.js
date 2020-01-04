@@ -1,4 +1,4 @@
-util = require('../dist/awspilot-dynamodb-util')
+util = require('../dist/awspilot-dynamodb-util.node')
 
 assert = require('core-assert')
 
