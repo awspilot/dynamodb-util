@@ -276,13 +276,7 @@ DynamoUtil.parse = function (v) {
 	if (v.hasOwnProperty('B')) {
 
 /////////////////
-		if (typeof Buffer.from === "function") {
-			// Node 5.10+
-			return Buffer.from(v.B, 'base64');
-		} else {
-			// older Node versions, now deprecated
-			return new Buffer(v.B, 'base64');
-		}
+		return Uint8Array.from(v.B);
 ///////////
 //////////////////////////////////////////
 ////////////////
