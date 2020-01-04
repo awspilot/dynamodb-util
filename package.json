@@ -6,10 +6,8 @@
 	"scripts": {
 		"test": "mocha --timeout 100000 -S -R spec --exit",
 
-		"start": "webpack -w & node_modules/node-static/bin/cli.js -p 9992",
-		"build": "webpack --config webpack.node.js",
-		"watch": "webpack --config webpack.node.js --watch"
-
+		"start": "webpack --config webpack.node.js --watch",
+		"build": "webpack --config webpack.node.js"
 	},
 	"repository": {
 		"type": "git",
