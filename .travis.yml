@@ -17,4 +17,4 @@ install:
     - npm install -g mocha-phantomjs
 before_script:
     - phantomjs -version
-    - mocha-phantomjs -version
+    - mocha-phantomjs --version
