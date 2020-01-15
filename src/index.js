@@ -188,6 +188,9 @@ DynamoUtil.parse = function(v) {
 	if (v.hasOwnProperty('B')) {
 
 		/// #if BROWSER
+			if ( v.B instanceof Uint8Array )
+				return v.B;
+
 			return Uint8Array.from( btoa( v.B ) , function (c) { return c.charCodeAt(0) } )
 		/// #else
 		if (typeof Buffer.from === "function") { // Node 5.10+
