@@ -276,6 +276,8 @@ DynamoUtil.parse = function (v) {
 	if (v.hasOwnProperty('B')) {
 
 /////////////////
+		if (v.B instanceof Uint8Array) return v.B;
+
 		return Uint8Array.from(btoa(v.B), function (c) {
 			return c.charCodeAt(0);
 		});
