@@ -13,9 +13,9 @@ node_js:
     - "9"
     - "10"
     - "12"
-install:
-    - npm install phantomjs-prebuilt -g
-    - npm install -g mocha-phantomjs
-before_script:
-    - phantomjs -version
-    - mocha-phantomjs --version
+#install:
+#    - npm install phantomjs-prebuilt -g
+#    - npm install -g mocha-phantomjs
+#before_script:
+#    - phantomjs -version
+#    - mocha-phantomjs --version
