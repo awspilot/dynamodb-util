@@ -133,7 +133,7 @@ DynamoUtil.anormalizeList = function (list) {
 DynamoUtil.anormalizeItem = function (item) {
 	var anormal = {};
 	for (var key in item) {
-		if (item.hasOwnProperty(key)) {
+		if (hasOwnProperty.call(item, key)) {
 			anormal[key] = DynamoUtil.stringify(item[key]);
 		}
 	}
@@ -174,7 +174,7 @@ DynamoUtil.stringify = function ($value) {
 		if (Array.isArray($value)) {
 			var to_ret = { 'L': [] };
 			for (var i in $value) {
-				if ($value.hasOwnProperty(i)) {
+				if (hasOwnProperty.call($value, i)) {
 					to_ret.L[i] = DynamoUtil.stringify($value[i]);
 				}
 			}
@@ -218,7 +218,7 @@ DynamoUtil.stringify = function ($value) {
 
 		var to_ret = { 'M': {} };
 		for (var i in $value) {
-			if ($value.hasOwnProperty(i)) {
+			if (hasOwnProperty.call($value, i)) {
 				var val = DynamoUtil.stringify($value[i]);
 
 				if (val !== undefined) // when empty string is replaced with undefined
