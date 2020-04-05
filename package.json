@@ -22,7 +22,7 @@
 	},
 	"homepage": "https://github.com/awspilot/dynamodb-util#readme",
 	"devDependencies": {
-		"mocha": "^7.1.1",
+		"mocha": "^5.2.0",
 		"async": "2.6.1",
 		"core-assert": "0.2.1",
 
